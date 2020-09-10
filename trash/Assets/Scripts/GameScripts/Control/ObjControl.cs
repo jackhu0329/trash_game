@@ -5,10 +5,12 @@ using UnityEngine;
 public class ObjControl : MonoBehaviour
 {
     private bool inCheckPoint = false;
+    private Vector3 originPosition;
     // Start is called before the first frame update
     void Start()
     {
-        
+        originPosition = transform.position;
+        GameEventCenter.AddEvent("ResetObj", ResetObj);
     }
 
     // Update is called once per frame
@@ -34,5 +36,11 @@ public class ObjControl : MonoBehaviour
             //
 
         }
+    }
+
+    private void ResetObj()
+    {
+        transform.position = originPosition;
+        this.gameObject.SetActive(false);
     }
 }
