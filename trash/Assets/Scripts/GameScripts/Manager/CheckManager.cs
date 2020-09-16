@@ -22,6 +22,7 @@ public class CheckManager : MonoBehaviour
 
 
         InitGame();
+        GameEventCenter.AddEvent("SuccessfulMotion", SuccessfulMotion);
     }
 
     // Update is called once per frame

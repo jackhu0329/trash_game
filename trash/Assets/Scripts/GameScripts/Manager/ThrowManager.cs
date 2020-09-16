@@ -24,24 +24,21 @@ public class ThrowManager : MonoBehaviour
     {
         if (cup.transform.GetChild(2).gameObject.activeSelf)
         {
-            //Debug.Log("throwObject 1");
             throwObject = cup.transform.GetChild(2).gameObject;
         }
         else if (bottle.transform.GetChild(2).gameObject.activeSelf)
         {
-            Debug.Log("throwObject 2");
             throwObject = bottle.transform.GetChild(2).gameObject;
         }
         else if (paper.transform.GetChild(2).gameObject.activeSelf)
         {
-            Debug.Log("throwObject 3");
             throwObject = paper.transform.GetChild(2).gameObject;
         }
         //Debug.Log("throwObject name:"+throwObject.name);
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log("throwObject A:"+ throwObject.name);
+
         }
 
         if (jumpInit)
@@ -64,8 +61,9 @@ public class ThrowManager : MonoBehaviour
             jumpInit = false;
             //throwObject.SetActive(false);
             GameEventCenter.DispatchEvent("ResetObj");
-           // pan.transform.GetChild(1).gameObject.SetActive(false);
-           // throwObject.transform.GetChild(1).gameObject.SetActive(true);
+            GameEventCenter.DispatchEvent("SuccessfulMotion");
+            // pan.transform.GetChild(1).gameObject.SetActive(false);
+            // throwObject.transform.GetChild(1).gameObject.SetActive(true);
         }
     }
 
