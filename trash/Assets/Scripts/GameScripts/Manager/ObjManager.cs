@@ -22,7 +22,8 @@ public class ObjManager : MonoBehaviour
     {
 
         Debug.Log("obj manager start");
-        
+
+        GameEventCenter.AddEvent("SuccessfulMotionObj", SuccessfulMotionObj);
         ParseObjValue();
         GenerateList();
         randomArray = new int[count];
@@ -46,7 +47,7 @@ public class ObjManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("obj manager SuccessfulMotion");
-            SuccessfulMotion();
+            SuccessfulMotionObj();
         }
     }
 
@@ -96,7 +97,7 @@ public class ObjManager : MonoBehaviour
 
     }
 
-    private void SuccessfulMotion()
+    private void SuccessfulMotionObj()
     {
         objList[randomArray[objPointer]-1].SetActive(false);
         objPointer++;

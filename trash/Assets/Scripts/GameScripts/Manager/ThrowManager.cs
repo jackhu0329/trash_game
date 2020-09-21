@@ -6,7 +6,7 @@ public class ThrowManager : MonoBehaviour
 {
     public GameObject cup, bottle, paper;
     private GameObject throwObject;
-    private Vector3 posStart, posEnd;
+    private Vector3 posStart, posEnd,temp;
     public float moveSpeed = 2; // 實際速度
     public float moveSpeedFixed = 2; // 移動速度
     public float jumpTime = 2f; // 起始點-終點的總時間
@@ -34,7 +34,8 @@ public class ThrowManager : MonoBehaviour
         {
             throwObject = paper.transform.GetChild(2).gameObject;
         }
-        //Debug.Log("throwObject name:"+throwObject.name);
+        temp = throwObject.transform.position;
+        //Debug.Log("throwObject name:"+throwObject.transform.position);
 
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -60,8 +61,10 @@ public class ThrowManager : MonoBehaviour
             jumpTimer = 0;
             jumpInit = false;
             //throwObject.SetActive(false);
-            GameEventCenter.DispatchEvent("ResetObj");
+            //GameEventCenter.DispatchEvent("ResetObj");
             GameEventCenter.DispatchEvent("SuccessfulMotion");
+            GameEventCenter.DispatchEvent("SuccessfulMotionObj");
+            GameEventCenter.DispatchEvent("successfulInUI"); 
             // pan.transform.GetChild(1).gameObject.SetActive(false);
             // throwObject.transform.GetChild(1).gameObject.SetActive(true);
         }
@@ -69,7 +72,7 @@ public class ThrowManager : MonoBehaviour
 
     private void Throw()
     {
-        posStart = throwObject.transform.position;
+        posStart = temp;
 
         Debug.Log("throwObject start");
         jumpInit = true;

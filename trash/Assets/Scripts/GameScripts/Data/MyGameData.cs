@@ -16,8 +16,8 @@ namespace LabData
         public MyGameData()
         {
             count = 5;
-            checkArea = 8;
-            trashArea = 8;
+            checkArea = 7;
+            trashArea = 7;
         }
         public MyGameData(int countValue, int checkAreaValue, int trashAreaValue)
         {

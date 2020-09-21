@@ -19,6 +19,8 @@ namespace GameData
         public string UserId { get; set; } = "Test01";
         public MyGameData GameData = new MyGameData();
 
+        
+
         /// <summary>
         /// FlowData 构造函数
         /// </summary>
