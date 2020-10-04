@@ -24,7 +24,7 @@ public class Lock : MonoBehaviour
 
     public void LockOpen()
     {
-        GameEventCenter.DispatchEvent("PlayMusic");
+        //GameEventCenter.DispatchEvent("PlayMusic");
         Debug.Log("LockOpenWait1");
         StartCoroutine(LockOpenWait());
     }

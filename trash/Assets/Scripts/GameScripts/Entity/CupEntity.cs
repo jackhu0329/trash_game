@@ -92,6 +92,7 @@ namespace GameFrame
                     GameEventCenter.DispatchEvent("SuccessfulMotionSpawn");
                     GameEventCenter.DispatchEvent("CheckCorrect");
                     GameEventCenter.DispatchEvent("GetScore");
+                    GameEventCenter.DispatchEvent("ResetHand");
                     //Thread.Sleep(500);
                     //timer = 0f;
                     GameDataManager.FlowData.objLock = true;

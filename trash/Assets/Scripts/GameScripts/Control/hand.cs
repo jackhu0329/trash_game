@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using HTC.UnityPlugin.Vive;
+
 using Valve.VR.InteractionSystem;
 
 public class hand : MonoBehaviour
@@ -16,13 +18,15 @@ public class hand : MonoBehaviour
 
     public GameObject pan;
     private GameObject pickObject = null;
+    private float timer = 0f;
+    private bool timerBool = false;
 
     public int testHand;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameEventCenter.AddEvent("Drop", Drop);
+        GameEventCenter.AddEvent("ResetHand", ResetHand);
         mPose = GetComponent<SteamVR_Behaviour_Pose>();
         mJoint = GetComponent<FixedJoint>();
     }
@@ -30,6 +34,60 @@ public class hand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!Correction.hasCorrection)
+        {
+
+            if (timerBool)
+            {
+                timer += Time.deltaTime;
+                if (timer >= 2.0f)
+                {
+                    Debug.Log(" RRRR ");
+                    //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().mainSceneUI.SetUIActive(0, false);
+                    //GameEventCenter.DispatchEvent<Vector3>(EventName.EnableCameraRig, this.transform.position);
+                    //GameEventCenter.DispatchEvent("CameraCorrection", transform.position);
+                    Correction.handCorrection = transform.position;
+                    Correction.hasCorrection = true;
+                    Correction.doCorrection = true;
+                }
+            }
+            Debug.Log(" RRRR 0");
+            if (mGrabAction.GetStateDown(mPose.inputSource))
+            {
+                Debug.Log(" RRRR 1:"+ timer);
+                timerBool = true;
+            }
+
+            
+
+            if (mGrabAction.GetStateUp(mPose.inputSource))
+            {
+                timer = 0f;
+                timerBool = false;
+                /*if (ScoreManager.gameStatus == 5)
+                {
+                    GameEventCenter.DispatchEvent("InitStatus");
+                }*/
+
+            }
+
+            /*if (ViveInput.GetPress(HandRole.LeftHand, ControllerButton.Menu))
+            {
+                timer += Time.deltaTime;
+                if (timer >= 2.0f)
+                {
+                    Debug.Log(" LLLL ");
+                    //GameEntityManager.Instance.GetCurrentSceneRes<MainSceneRes>().mainSceneUI.SetUIActive(0, false);
+                    //GameEventCenter.DispatchEvent<Vector3>(EventName.EnableCameraRig, this.transform.position);
+                    GameEventCenter.DispatchEvent("CameraCorrection", transform.position);
+                    Correction.hasCorrection = true;
+                }
+            }*/
+
+            return;
+        }
+
 
         /*if (!Correction.hasCorrection)
         {
@@ -218,6 +276,7 @@ public class hand : MonoBehaviour
 
     public void ResetHand()
     {
-        Drop();
+        mContactInteractables = new List<Interactable>();
+       // Drop();
     }
 }

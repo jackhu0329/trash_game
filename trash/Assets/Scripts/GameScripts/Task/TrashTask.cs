@@ -151,6 +151,7 @@ namespace GameFrame
             //objLock = true;
             if (!GameDataManager.FlowData.objLock)
             {
+                
                 Debug.Log("TaskInit SuccessfulMotionObj2");
                 SpawnObj();
                 GameDataManager.FlowData.objLock = true;
