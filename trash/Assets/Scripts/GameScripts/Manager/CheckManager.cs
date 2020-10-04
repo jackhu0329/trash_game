@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameData;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,7 @@ public class CheckManager : MonoBehaviour
     void Start()
     {
         //GameEventCenter.AddEvent("SuccessfulMotion", SuccessfulMotion);
-
+        GameEventCenter.AddEvent("SuccessfulMotion", SuccessfulMotion);
         randomArray = new int[count];
         for(int x = 0; x < count; x++)
         {
@@ -22,7 +23,7 @@ public class CheckManager : MonoBehaviour
 
 
         InitGame();
-        GameEventCenter.AddEvent("SuccessfulMotion", SuccessfulMotion);
+        
     }
 
     // Update is called once per frame
@@ -31,6 +32,7 @@ public class CheckManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             SuccessfulMotion();
+            GameDataManager.FlowData.objLock = false;
         }
 
         if(gamePointer == count)
@@ -51,8 +53,17 @@ public class CheckManager : MonoBehaviour
 
     private void SuccessfulMotion()
     {
+        Debug.Log("check SuccessfulMotion");
         transform.GetChild(randomArray[gamePointer]).gameObject.SetActive(false);
         gamePointer++;
         transform.GetChild(randomArray[gamePointer]).gameObject.SetActive(true);
+        //StartCoroutine(unLock());
+        //GameDataManager.FlowData.objLock = false;
+    }
+
+    IEnumerator  unLock()
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameDataManager.FlowData.objLock = false;
     }
 }

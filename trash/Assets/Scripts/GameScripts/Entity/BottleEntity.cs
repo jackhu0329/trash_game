@@ -6,24 +6,34 @@ namespace GameFrame
 {
     public class BottleEntity : GameEntityBase
     {
-        private GameObject targetObj;
+        private GameObject targetObj, lockHandle;
         private float timer;
 
         private Vector3 posStart, posEnd;
-        public float moveSpeed = 2; // 實際速度
-        public float moveSpeedFixed = 2; // 移動速度
-        public float jumpTime = 2f; // 起始點-終點的總時間
+        public float moveSpeed = 1; // 實際速度
+        public float moveSpeedFixed = 1; // 移動速度
+        public float jumpTime = 1f; // 起始點-終點的總時間
         private float jumpTimer;
         private bool jumpInit = true;
+        private bool throwBool = false;
 
         public void Awake()
         {
             // transform.eulerAngles = new Vector3(-90, 0, -90);
             targetObj = GameObject.Find("ThrowTarget");
+            lockHandle = GameObject.Find("LockHandle");
         }
         public override void EntityDispose()
         {
 
+        }
+
+        public void Update()
+        {
+            if (throwBool)
+            {
+                Throw();
+            }
         }
 
         public void OnTriggerEnter(Collider other)
@@ -44,11 +54,12 @@ namespace GameFrame
             {
                 return;
             }
-
+            Debug.Log("test enter correct:"+ timer);
             timer += Time.deltaTime;
             if (timer >= 2)
             {
-                Throw();
+                Debug.Log("test enter correct:" + timer);
+                throwBool = true;
             }
 
         }
@@ -77,8 +88,19 @@ namespace GameFrame
                 jumpInit = false;
                 //transform.GetChild(1).gameObject.SetActive(false);
                 //targetObj.transform.GetChild(1).gameObject.SetActive(true);
+                if (!GameDataManager.FlowData.objLock)
+                {
+                    GameEventCenter.DispatchEvent("SuccessfulMotionSpawn");
+                    GameEventCenter.DispatchEvent("CheckCorrect");
+                    GameEventCenter.DispatchEvent("GetScore");
+                    //Thread.Sleep(500);
+                    //timer = 0f;
+                    GameDataManager.FlowData.objLock = true;
+                    //GameEventCenter.DispatchEvent("LockOpen");
+                    lockHandle.SendMessage("LockOpen");
+                }
                 Destroy(this.gameObject);
-
+               
             }
         }
     }

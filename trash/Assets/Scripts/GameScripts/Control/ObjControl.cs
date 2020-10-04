@@ -42,7 +42,7 @@ public class ObjControl : MonoBehaviour
             timerEnd = Mathf.FloorToInt(Time.time) - timerStart;
             if (timerEnd == 1)
             {
-                Debug.Log("test enter successful timer!!!!!!");
+                //Debug.Log("test enter successful timer!!!!!!");
                 timerStart = 0;
                 timer = false;
             }
@@ -53,7 +53,7 @@ public class ObjControl : MonoBehaviour
     {
         if (other.gameObject.CompareTag("CheckPoint"))
         {
-            Debug.Log("test enter correct");
+            //Debug.Log("test enter correct");
             inCheckPoint = true;
             other.GetComponent<MeshRenderer>().material = green;
             timerStart = Mathf.FloorToInt(Time.time);

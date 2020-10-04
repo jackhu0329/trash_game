@@ -22,6 +22,7 @@ public class hand : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameEventCenter.AddEvent("Drop", Drop);
         mPose = GetComponent<SteamVR_Behaviour_Pose>();
         mJoint = GetComponent<FixedJoint>();
     }
@@ -77,16 +78,16 @@ public class hand : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        if (!other.gameObject.CompareTag("Interactable") || !other.gameObject.CompareTag("PickUpArea"))
+        if (!other.gameObject.CompareTag("Interactable")) 
         {
             return;
         }
-        pickObject = other.gameObject;
+        //pickObject = other.gameObject;
 
-        if (other.gameObject.CompareTag("PickUpArea"))
+        /*if (other.gameObject.CompareTag("PickUpArea"))
         {
             other.transform.GetChild(2).gameObject.SetActive(true);
-        }
+        }*/
         else if (other.gameObject.CompareTag("Interactable"))
         {
             mContactInteractables.Add(other.gameObject.GetComponent<Interactable>());
@@ -169,6 +170,9 @@ public class hand : MonoBehaviour
         targetBody.angularVelocity = mPose.GetAngularVelocity();*/
 
         //Destroy(mCurrentInteractable.transform.gameObject);//destroy the object after drop
+        GameEventCenter.DispatchEvent("SuccessfulMotionSpawn");
+        Destroy(mCurrentInteractable.transform.gameObject);
+        mContactInteractables = new List<Interactable>();
         mJoint.connectedBody = null;
         mCurrentInteractable.mActiveHand = null;
         mCurrentInteractable = null;
@@ -210,5 +214,10 @@ public class hand : MonoBehaviour
         {
             GameEventCenter.DispatchEvent("NextStatus");
         }*/
+    }
+
+    public void ResetHand()
+    {
+        Drop();
     }
 }

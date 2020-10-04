@@ -19,7 +19,7 @@ namespace GameData
         public string UserId { get; set; } = "Test01";
         public MyGameData GameData = new MyGameData();
 
-        
+        public bool objLock=false;
 
         /// <summary>
         /// FlowData 构造函数

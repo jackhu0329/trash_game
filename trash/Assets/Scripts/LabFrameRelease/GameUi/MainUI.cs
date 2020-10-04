@@ -50,15 +50,16 @@ public class MainUI : MonoBehaviour
     {
         MyGameData data = LabTools.GetData<MyGameData>(choose.captionText.text);
         //MyGameData data = LabTools.GetData<MyGameData>("123");
-        GameFlowData gameFlow = new GameFlowData();
+        //GameFlowData gameFlow = new GameFlowData();
         //Debug.Log(data.angle);
-        GameDataManager.FlowData = gameFlow;
-        //GameDataManager.FlowData = new GameFlowData("01", data);
+        //GameDataManager.FlowData = gameFlow;
+        GameDataManager.FlowData = new GameFlowData("01", data);
 
         //var Id = gameFlow.UserId;
 
         //GameDataManager.LabDataManager.LabDataCollectInit(() => Id);
         GameSceneManager.Instance.Change2MainScene();
+        //Application.Quit();
     }
 
     private void UpdateList()

@@ -8,11 +8,12 @@ public class GameSceneUI : MonoBehaviour
     private int score = 0;
     private int time,start,end;
     public Text timeUI,scoreUI;
+    private bool timer = false;
 
     // Start is called before the first frame update
     void Awake()
     {
-        GameEventCenter.AddEvent("successfulInUI", successfulInUI);
+        GameEventCenter.AddEvent("GetScore", GetScore);
     }
 
     private void Start()
@@ -24,11 +25,23 @@ public class GameSceneUI : MonoBehaviour
     {
         if(score == GameDataManager.FlowData.GameData.count)
         {
-            time = Mathf.FloorToInt(Time.time) - start;
+            if (!timer)
+            {
+                timer = true;
+                time = Mathf.FloorToInt(Time.time) - start;
+            }
+            //time = Mathf.FloorToInt(Time.time) - start;
             transform.GetComponent<Canvas>().transform.GetChild(0).gameObject.SetActive(true);
             scoreUI.text = "完成數量:" + score;
             timeUI.text = "花費時間:" + time;
+            GameEventCenter.DispatchEvent("BGMFinish");
 
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            GameEventCenter.DispatchEvent("CheckCorrect");
+            score++;
         }
     }
 
@@ -44,7 +57,7 @@ public class GameSceneUI : MonoBehaviour
         , gameUI);
     }
 
-    private void successfulInUI()
+    private void GetScore()
     {
         score++;
     }
